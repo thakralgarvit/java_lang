@@ -2,19 +2,20 @@ import java.util.*;
 
 public class learn {
     public static void main(String[] args) {
-        Scanner sc= new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
-        // reverce a given num
-        System.out.println("enter your number");
+        // fibonacchi series
+        System.out.print("enter a num: ");
         int n = sc.nextInt();
-        int rev = 0; // making an int to store the reverce num
+        int num1 = 0;
+        int num2 = 1;
 
-        while (n > 0) {
-            int lasdig = n % 10; // the modulo will give the last digit
-            n /= 10; // this will remove the last digit from out n
-            rev = (rev * 10) + lasdig; // this will store our new n in reverce
+        for (int i = 0; i <= n; i++) {
+            System.out.println(num1 + " ");
+
+            int sum = num1 + num2; // new intiger to store sum of num 1,2;
+            num1 = num2;
+            num2 = sum; // shifting of the digits
         }
-
-        System.out.println(rev);
     }
 }
