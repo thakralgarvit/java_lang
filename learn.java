@@ -2,15 +2,19 @@ import java.util.*;
 
 public class learn {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc= new Scanner(System.in);
 
-        int year = sc.nextInt();
+        // reverce a given num
+        System.out.println("enter your number");
+        int n = sc.nextInt();
+        int rev = 0; // making an int to store the reverce num
 
-        if (year % 100 == 0 && year % 400 != 0) {
-            System.out.println(" the year is century");
-        } else {
-            System.out.println(" year is not century");
+        while (n > 0) {
+            int lasdig = n % 10; // the modulo will give the last digit
+            n /= 10; // this will remove the last digit from out n
+            rev = (rev * 10) + lasdig; // this will store our new n in reverce
         }
-        sc.close();
+
+        System.out.println(rev);
     }
 }
