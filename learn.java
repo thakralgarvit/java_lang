@@ -4,15 +4,21 @@ public class learn {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        // printing a pattern with nessted loops
-        System.out.println("write a num");
-        int n = sc.nextInt();
+        int[] arr = { 9, 7, 2, 4, 8, };
+        int min = arr[0];
+        int max = arr[0];
 
-        for (int i = 1; i <= n; i++) { // outter loop for raws
-            for (int j = 1; j <= i; j++) { // inner loop for colums
-                System.out.print(" * ");
+        for (int i = 1; i < arr.length; i++) {
+            // min conndition
+            if (min < arr[i]) {
+                min = arr[i];
+
             }
-            System.out.println(); // to move in next line
+            if (max > arr[i]) { // max condition
+                max = arr[i];
+            }
         }
+        System.out.println("the max is " + max);
+        System.out.println("the min is " + min);
     }
 }
