@@ -4,21 +4,23 @@ public class learn {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        int[] arr = { 9, 7, 2, 4, 8, };
-        int min = arr[0];
-        int max = arr[0];
+        // checking palindrom
 
-        for (int i = 1; i < arr.length; i++) {
-            // min conndition
-            if (min < arr[i]) {
-                min = arr[i];
+        // input a string
+        System.out.print("input a num: ");
+        String str = sc.nextLine();
 
-            }
-            if (max > arr[i]) { // max condition
-                max = arr[i];
+        boolean ispali = true;
+        int length = str.length();
+
+        for (int i = 1; i <= length / 2; i++) { // to make it faster
+            if (str.charAt(i) != str.charAt(length - 1 - i)) { // to check the charAt(i) not equal to end of the word
+                ispali = false;
+                break; // to get out of loop as soon as the condition is true
             }
         }
-        System.out.println("the max is " + max);
-        System.out.println("the min is " + min);
+
+        System.out.println(ispali);
+
     }
 }
