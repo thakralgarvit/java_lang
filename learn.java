@@ -4,25 +4,21 @@ public class learn {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        // finding prime in 2 -100 num
+        // hallow sq
 
-        // first loop to get from 2-100
-        for (int i = 2; i <= 100; i++) {
-            boolean isprime = true; // placed inside so that it can reset when loop runs again
+        int n = 5;
+        int m = 5;
 
-            if (i == 2) {
-                isprime = true;
-            } else {
-                // another loop to check the diviser
-                for (int j = 2; j <= Math.sqrt(i); j++) {
-                    if (i % j == 0) {
-                        isprime = false;
-                    }
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                // this if is used to consider only boundaries
+                if (i == 1 || j == 1 || i == n || j == m) {
+                    System.out.print(" * ");
+                } else { // to print space
+                    System.out.print("   ");
                 }
             }
-            if (isprime) {
-                System.out.println(i + " ");
-            }
+            System.out.println(); // move to next line
         }
     }
 }
