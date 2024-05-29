@@ -4,52 +4,31 @@ public class learn {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        // butterfly pattern
+        // time calculator
 
-        int n = 4;
+        System.out.println("put in your time");
+        int day = sc.nextInt();
+        int hr = sc.nextInt();
+        int min = sc.nextInt();
 
-        for (int i = 1; i <= n; i++) {
+        // converting GMT TO IST
 
-            // 1st star
-            for (int j = 1; j <= i; j++) {
-                System.out.print("* ");
-            }
+        hr += 5;
+        min += 30;
 
-            // printing spaces
-            int spc = 2 * (n - i);
-
-            for (int j = 1; j <= spc; j++) {
-                System.out.print("  ");
-            }
-
-            // 2nd star
-            for (int j = 1; j <= i; j++) {
-                System.out.print("* ");
-            }
-            System.out.println();
+        if (hr > 24) {
+            day++;
+            hr -= 24;
+        }
+        if (min > 60) {
+            hr++;
+            min -= 60;
+        }
+        if (day > 30) {
+            day = 1;
         }
 
-        // 2nd half
-        for (int i = n; i >= 1; i--) {
+        System.out.println("the date will be: " + day + "  hr: " + hr + "  min: " + min);
 
-            // 1st star
-            for (int j = 1; j <= i; j++) {
-                System.out.print("* ");
-            }
-
-            // printing spaces
-            int spc = 2 * (n - i);
-
-            for (int j = 1; j <= spc; j++) {
-                System.out.print("  ");
-            }
-
-            // 2nd star
-            for (int j = 1; j <= i; j++) {
-                System.out.print("* ");
-            }
-            System.out.println();
-        }
-        System.out.println();
     }
 }
