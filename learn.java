@@ -1,33 +1,35 @@
 import java.util.*;
 
 public class learn {
-    // converting binary to decimal
+    // converting decimal to binary
 
     // creating a new function
-    public static void cov(int binum) {
+    public static void cov(int dicnum) {
 
         // some bin integers to strore value
-        int mybinum = binum;
+        int mydec = dicnum;
         int pow = 0;
-        int decnum = 0;
+        int binum = 0;
 
-        // starting the loop until our binary is 0
-        while (binum > 0) {
-            int lastdig = binum % 10;
-            // main converting
-            decnum += lastdig * ((int) Math.pow(2, pow));
+        // starting the loop until our decimal is 0
+        while (dicnum > 0) {
+
+            int remander = dicnum % 2;
+            binum += remander * ((int) Math.pow(10, pow));
             pow++;
-            binum /= 10;
+
+            // to change the value of decimal
+            dicnum /= 2;
         }
-        System.out.println("decimal of your " + mybinum + " is " + decnum);
+        System.out.println("decimal of your " + mydec + " is " + binum);
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("write a binary number: ");
-        int binum = sc.nextInt();
+        System.out.println("write a decimal number: ");
+        int dicnum = sc.nextInt();
 
-        cov(binum); // calling the funtion
+        cov(dicnum); // calling the funtion
     }
 }
