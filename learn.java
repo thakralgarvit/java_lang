@@ -1,34 +1,33 @@
 import java.util.*;
 
 public class learn {
+    // converting binary to decimal
+
+    // creating a new function
+    public static void cov(int binum) {
+
+        // some bin integers to strore value
+        int mybinum = binum;
+        int pow = 0;
+        int decnum = 0;
+
+        // starting the loop until our binary is 0
+        while (binum > 0) {
+            int lastdig = binum % 10;
+            // main converting
+            decnum += lastdig * ((int) Math.pow(2, pow));
+            pow++;
+            binum /= 10;
+        }
+        System.out.println("decimal of your " + mybinum + " is " + decnum);
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        // time calculator
+        System.out.println("write a binary number: ");
+        int binum = sc.nextInt();
 
-        System.out.println("put in your time");
-        int day = sc.nextInt();
-        int hr = sc.nextInt();
-        int min = sc.nextInt();
-
-        // converting GMT TO IST
-
-        hr += 5;
-        min += 30;
-
-        if (hr > 24) {
-            day++;
-            hr -= 24;
-        }
-        if (min > 60) {
-            hr++;
-            min -= 60;
-        }
-        if (day > 30) {
-            day = 1;
-        }
-
-        System.out.println("the date will be: " + day + "  hr: " + hr + "  min: " + min);
-
+        cov(binum); // calling the funtion
     }
 }
