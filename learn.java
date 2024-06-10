@@ -2,42 +2,39 @@ import java.util.*;
 
 public class learn {
 
-    public static void kadanes(int num[]) {
-        int cs = 0; // current sum to store the value for non negative num
-        int csm = 0; // current sum minimum to store the value for negative num
-        int ms = Integer.MIN_VALUE; // to compare
-        int msm = Integer.MAX_VALUE; // to compare (minimum)
-        int flag = 0; // dummy value use to identify
+    public static void rainwater(int hight[]) {
+        int l = hight.length;
+        int LMx[] = new int[l];
+        int RMx[] = new int[l];
 
-        for (int i = 0; i < num.length; i++) { // to check all the integers are +ve/-ve
-            if (num[i] > 0) {
-                flag = 1; // change the value if the num[i] is bigger making it a +ve integer
-            }
+        // calculate left max i=1 : l ++
+        LMx[0] = hight[0];
+        for (int i = 1; i < l; i++) {
+            LMx[i] = Math.max(hight[i], LMx[i - 1]);
         }
 
-        if (flag == 0) { // condition to make it perform one function at a time
-            for (int i = 0; i < num.length; i++) {
-                msm = Math.min(msm, num[i]);
-                csm = msm; // storing the ans
-            }
-            System.out.println("the minimun is: " + csm);
-        } else {
-            for (int i = 0; i < num.length; i++) {
-                cs += num[i]; // calculating the max sum
-                if (cs < 0) {
-                    cs = 0; // changing its value if the calculated sum ends up in 0
-                }
-                ms = Math.max(ms, cs); // comaring maximum integer
-            }
-            System.out.println("the maximun is: " + ms);
+        // calculate right max i=l-2 : 0 --
+        RMx[l - 1] = hight[l - 1];
+        for (int i = l - 2; i >= 0; i--) {
+            RMx[i] = Math.max(hight[i], RMx[i + 1]);
         }
 
+        int totalwater = 0;
+        for (int i = 0; i < l; i++) {
+            // find waterlevel (find min in left and right max)
+            int waterlevel = Math.min(LMx[i], RMx[i]);
+
+            // calculate trapedwater (waterlevel - height [i] * wirth)
+            int trapedwater = waterlevel - hight[i];
+            totalwater += trapedwater;
+        }
+        System.out.println("total trap water is: " + totalwater);
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int num[] = { -9, -4, -2, -8, -1 };
-        // checking max & min sub array sum with the best time complexity
-        kadanes(num);
+
+        int hight[] = { 4, 2, 0, 6, 3, 2, 5 };
+        rainwater(hight);
     }
 }
