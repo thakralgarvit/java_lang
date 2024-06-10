@@ -2,38 +2,42 @@ import java.util.*;
 
 public class learn {
 
-    public static void maxsubarrsum(int num[]) { // with better time complexity
-        // declation of new array prefix
-        int prefix[] = new int[num.length];
-        int currsum = 0;
-        int maxsum = Integer.MIN_VALUE;
+    public static void kadanes(int num[]) {
+        int cs = 0; // current sum to store the value for non negative num
+        int csm = 0; // current sum minimum to store the value for negative num
+        int ms = Integer.MIN_VALUE; // to compare
+        int msm = Integer.MAX_VALUE; // to compare (minimum)
+        int flag = 0; // dummy value use to identify
 
-        // putting values in prefix array
-        prefix[0] = num[0]; // first index is same
-        for (int i = 1; i < prefix.length; i++) {
-            prefix[i] = prefix[i - 1] + num[i]; // to get total of the prefix index
-        }
-
-        for (int i = 0; i < num.length; i++) { // to get start
-            currsum = 0;
-            for (int j = i; j < num.length; j++) { // to get end
-                // calculating the sum throught prefix array  
-                currsum = i == 0 ? prefix[j] : prefix[j] - prefix[i - 1];
-            }
-            if (currsum > maxsum) { // compare the max value
-                maxsum = currsum;
+        for (int i = 0; i < num.length; i++) { // to check all the integers are +ve/-ve
+            if (num[i] > 0) {
+                flag = 1; // change the value if the num[i] is bigger making it a +ve integer
             }
         }
 
-        System.out.println(maxsum);
+        if (flag == 0) { // condition to make it perform one function at a time
+            for (int i = 0; i < num.length; i++) {
+                msm = Math.min(msm, num[i]);
+                csm = msm; // storing the ans
+            }
+            System.out.println("the minimun is: " + csm);
+        } else {
+            for (int i = 0; i < num.length; i++) {
+                cs += num[i]; // calculating the max sum
+                if (cs < 0) {
+                    cs = 0; // changing its value if the calculated sum ends up in 0
+                }
+                ms = Math.max(ms, cs); // comaring maximum integer
+            }
+            System.out.println("the maximun is: " + ms);
+        }
 
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int num[] = { 1, -2, 6, -1, 3 };
-
-        maxsubarrsum(num);
-
+        int num[] = { -9, -4, -2, -8, -1 };
+        // checking max & min sub array sum with the best time complexity
+        kadanes(num);
     }
 }
