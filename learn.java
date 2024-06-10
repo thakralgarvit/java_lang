@@ -2,45 +2,38 @@ import java.util.*;
 
 public class learn {
 
-    public static void subarr(int num[]) {
-        int tp = 0; // take acount of output
-        int max = Integer.MIN_VALUE;
-        int min = Integer.MAX_VALUE;
-        int curmax = 0;
-        int currmin = 0;
+    public static void maxsubarrsum(int num[]) { // with better time complexity
+        // declation of new array prefix
+        int prefix[] = new int[num.length];
+        int currsum = 0;
+        int maxsum = Integer.MIN_VALUE;
 
-        // to get first num
-        for (int i = 0; i <= num.length - 1; i++) {
-            // to get second num
-            for (int j = i; j <= num.length - 1; j++) {
-                int sum = 0; // to get sum
-                for (int k = i; k <= j; k++) { // print and sum the integer
-                    System.out.print(num[k] + ", ");
-                    sum += num[k];
-                }
-                if (sum < min) { // checking the min condition
-                    min = sum;
-                    currmin = sum;
-                } else if (sum > max) { // checking max condition
-                    max = sum;
-                    curmax = sum;
-                }
-                System.out.print("sum is: " + sum);
-                System.out.println();
-                tp++;
-            }
-            System.out.println();
+        // putting values in prefix array
+        prefix[0] = num[0]; // first index is same
+        for (int i = 1; i < prefix.length; i++) {
+            prefix[i] = prefix[i - 1] + num[i]; // to get total of the prefix index
         }
 
-        System.out.println("minimum sum is: " + currmin + " & maximum is: " + curmax);
-        System.out.println("total output: " + tp);
+        for (int i = 0; i < num.length; i++) { // to get start
+            currsum = 0;
+            for (int j = i; j < num.length; j++) { // to get end
+                // calculating the sum throught prefix array  
+                currsum = i == 0 ? prefix[j] : prefix[j] - prefix[i - 1];
+            }
+            if (currsum > maxsum) { // compare the max value
+                maxsum = currsum;
+            }
+        }
+
+        System.out.println(maxsum);
+
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int num[] = { 2, -1, -4, 5, 9 };
+        int num[] = { 1, -2, 6, -1, 3 };
 
-        subarr(num);
+        maxsubarrsum(num);
 
     }
 }
