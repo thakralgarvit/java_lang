@@ -2,39 +2,32 @@ import java.util.*;
 
 public class learn {
 
-    public static void rainwater(int hight[]) {
-        int l = hight.length;
-        int LMx[] = new int[l];
-        int RMx[] = new int[l];
+    public static int profitstock (int price []) {
+        int bp = Integer.MAX_VALUE; // buying price to get lowest price
+        int mp = 0; // to track the max profit of the stock
+        int sp = 0; // just to print selling price
 
-        // calculate left max i=1 : l ++
-        LMx[0] = hight[0];
-        for (int i = 1; i < l; i++) {
-            LMx[i] = Math.max(hight[i], LMx[i - 1]);
+        for (int i = 0; i < price.length; i ++) {
+            if (price[i] > bp) { // to check the values and also give bp the value of first variable
+                int crrp = price[i] - bp; // current profit
+                if (mp < crrp){ // compRE MAX profit to current profit
+                    mp = crrp;
+                    sp = price[i]; // putting the biggest selling price;
+                }
+
+            } else  { // when price is < buying price
+                bp = price[i];
+            }
         }
+        System.out.println("our buying price is: " + bp + "\nand selling price is: " + sp);
 
-        // calculate right max i=l-2 : 0 --
-        RMx[l - 1] = hight[l - 1];
-        for (int i = l - 2; i >= 0; i--) {
-            RMx[i] = Math.max(hight[i], RMx[i + 1]);
-        }
-
-        int totalwater = 0;
-        for (int i = 0; i < l; i++) {
-            // find waterlevel (find min in left and right max)
-            int waterlevel = Math.min(LMx[i], RMx[i]);
-
-            // calculate trapedwater (waterlevel - height [i] * wirth)
-            int trapedwater = waterlevel - hight[i];
-            totalwater += trapedwater;
-        }
-        System.out.println("total trap water is: " + totalwater);
+        return mp;
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        int hight[] = { 4, 2, 0, 6, 3, 2, 5 };
-        rainwater(hight);
+        int price[] = {7, 1, 5, 3, 6, 4};
+        System.out.println(profitstock(price));
     }
 }
