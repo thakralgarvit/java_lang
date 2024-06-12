@@ -2,32 +2,39 @@ import java.util.*;
 
 public class learn {
 
-    public static int profitstock (int price []) {
-        int bp = Integer.MAX_VALUE; // buying price to get lowest price
-        int mp = 0; // to track the max profit of the stock
-        int sp = 0; // just to print selling price
+    public static int find(int num[], int target) {
+        int left = 0;
+        int right = num.length - 1;
 
-        for (int i = 0; i < price.length; i ++) {
-            if (price[i] > bp) { // to check the values and also give bp the value of first variable
-                int crrp = price[i] - bp; // current profit
-                if (mp < crrp){ // compRE MAX profit to current profit
-                    mp = crrp;
-                    sp = price[i]; // putting the biggest selling price;
+        while (left <= right) { // infinity loop
+            int mid = left + (right - left) / 2; // using (right-left) to control the overflow of index
+            if (num[mid] == target) { // first thing to check if our target is in the mid
+                return mid;
+            }
+            if (num[left] <= num[mid]) { // value in left <= value of mid so that we can go to left side of search
+                if (num[left] <= target && target < num[mid]) { // as the num is sorted so if in the range of start & end our num is present or not
+                    right = mid - 1;
+                                                               
+                } else {
+                    left = mid + 1;
                 }
-
-            } else  { // when price is < buying price
-                bp = price[i];
+            } else {
+                if (num[mid] < target && target <= num[right]) { // right half of the num
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                }
             }
         }
-        System.out.println("our buying price is: " + bp + "\nand selling price is: " + sp);
 
-        return mp;
+        return -1;
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        int price[] = {7, 1, 5, 3, 6, 4};
-        System.out.println(profitstock(price));
+        int num[] = { 4, 5, 6, 7, 0, 1, 2 };
+        int target = 0;
+        System.out.println(find(num, target));
     }
 }
