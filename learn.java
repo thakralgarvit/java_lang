@@ -2,84 +2,51 @@ import java.util.*;
 
 public class learn {
 
-    public static void bubblesort(int arr[]) {
-        for (int i = 0; i< arr.length-1; i++) { // it will length-2 bec the last checking will be done at there
-            for (int j = 0; j < arr.length-1-i; j++) {
-                if (arr[j] > arr[j+1]) {
-                    //swap
-                    int temp = arr[j];
-                    arr[j] = arr[j+1];
-                    arr[j+1] = temp;
+    public static void spiral(int arr[][]) {
+        int startrow = 0;
+        int startcol = 0;
+        int endrow = arr.length-1;
+        int endcol = arr[0].length-1;
+
+        while (startrow <= endrow && startcol <= endcol) {
+            // top line
+            for (int i = startcol; i <= endcol; i++) {
+                System.out.print(arr[startrow][i] + " ");
+            }
+            // right
+            for (int i = startrow+1; i <= endrow; i++) {
+                System.out.print(arr[i][endcol] + " ");
+            }
+            // bottom
+            for (int i = endcol-1; i >= startcol; i--) {
+                if (startrow==endrow) {
+                    break;
                 }
+                System.out.print(arr[endrow][i] + " ");
             }
-        }
-    }
-
-    public static void selctionsort(int arr[]) {
-        for (int i = 0; i < arr.length-1; i++) {
-            int min = i; // mini position
-            for (int j = i+1; j < arr.length; j++) { // compare it to every other
-                if (arr[min] > arr[j]) { 
-                    min = j; // change min position if j is smaller
+            // left
+            for (int i = endrow - 1; i >= startrow + 1; i--) { // to not print the values already printed
+                if (startcol == endcol) {
+                    break;
                 }
+                System.out.print(arr[i][startcol] +" ");
             }
-            // swap
-            int temp = arr[min];
-            arr[min]= arr[i];
-            arr[i] = temp;
-        }
-    }
-
-    public static void insertionsort(int arr[]) {
-        for (int i = 0; i < arr.length; i ++) {
-            int curr = arr[i];
-            int pre = i-1;
-            while (pre>=0 && arr[pre] > curr) { // making of space by cheacking the condition and shifting them
-                arr[pre+1] = arr[pre];
-                pre--;
-            }
-            arr[pre+1] = curr; // putting in the value (pre + 1 = because sometimes it may go one back)
-        }
-    }
-
-    public static void countingsort(int arr[]) {
-        int max = Integer.MIN_VALUE; // to get length for new array it should be = to max value in array + 1
-        for (int i = 0; i < arr.length; i ++) {
-            max = Math.max(arr[i] , max);
-        }
-
-        int frequancy[] = new int[max + 1];
-        for (int i = 0; i < arr.length; i++) {
-            frequancy[arr[i]]++; // putting values in new array at pertcular index of the same num
-        }
-
-        int j = 0;
-        for (int i = 0; i < max; i++) { // main sortting by putting values in arr and new arr
-            while (frequancy[i] > 0) {
-                arr[j] = i;
-                j++;
-                frequancy[i]--;
-            }
-        }
-    }
-
-    public static void in_build(int arr[]){
-        Arrays.sort(arr); // acending order
-        //Arrays.sort(arr, Collections.reverseOrder()); // decending order
-    }              // its red because the arr is not in Interger
-
-    public static void printarr(int arr[]) {
-        for (int i = 0; i < arr.length; i++) {
-            System.out.print(arr[i] + " ");
+            startcol++;
+            startrow++;
+            endcol--;
+            endrow--;
         }
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        int arr[] = {3, 7, 2, 3, 4, 1, 3, 5, 6};
-        in_build(arr);
-        printarr(arr);
+        int arr[][] = {
+            {1,2,3,4} ,
+            {5,6,7,8,} ,
+            {9,10,11,12} ,
+            {13,14,15,16}};
+        spiral(arr);
 
     }
 }
