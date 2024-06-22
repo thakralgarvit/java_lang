@@ -2,40 +2,21 @@ import java.util.*;
 
 public class learn {
 
-    public static void spiral(int arr[][]) {
-        int startrow = 0;
-        int startcol = 0;
-        int endrow = arr.length-1;
-        int endcol = arr[0].length-1;
+    public static void StairCaseSearch(int arr[][], int key) {
+        int row = 0;
+        int col = arr[0].length-1;
 
-        while (startrow <= endrow && startcol <= endcol) {
-            // top line
-            for (int i = startcol; i <= endcol; i++) {
-                System.out.print(arr[startrow][i] + " ");
+        while (row < arr.length && col >= 0){
+            if (arr[row][col] == key){
+                System.out.println("key found at:" + row + ","+ col);
+                return;
+            } else if (key < arr[row][col]) {
+                col--;
+            } else {
+                row++;
             }
-            // right
-            for (int i = startrow+1; i <= endrow; i++) {
-                System.out.print(arr[i][endcol] + " ");
-            }
-            // bottom
-            for (int i = endcol-1; i >= startcol; i--) {
-                if (startrow==endrow) {
-                    break;
-                }
-                System.out.print(arr[endrow][i] + " ");
-            }
-            // left
-            for (int i = endrow - 1; i >= startrow + 1; i--) { // to not print the values already printed
-                if (startcol == endcol) {
-                    break;
-                }
-                System.out.print(arr[i][startcol] +" ");
-            }
-            startcol++;
-            startrow++;
-            endcol--;
-            endrow--;
         }
+        System.out.println("key not found");
     }
 
     public static void main(String[] args) {
@@ -46,7 +27,9 @@ public class learn {
             {5,6,7,8,} ,
             {9,10,11,12} ,
             {13,14,15,16}};
-        spiral(arr);
+        System.out.println("enter a key");
+        int key = sc.nextInt();
+        StairCaseSearch(arr, key);
 
     }
 }
