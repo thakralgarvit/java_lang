@@ -2,45 +2,64 @@ import java.util.*;
 
 public class learn {
 
-    public static void StairCaseSearch(int arr[][], int key) {
-        int row = 0;
-        int col = arr[0].length - 1;
-
-        while (row < arr.length && col >= 0) {
-            if (arr[row][col] == key) {
-                System.out.println("key found at:" + row + "," + col);
-                return;
-            } else if (key < arr[row][col]) {
-                col--;
-            } else {
-                row++;
-            }
-        }
-        System.out.println("key not found");
+    public static int fctorial(int n) {
+       if (n == 0) {
+        return 0;
+       } 
+       return n + fctorial(n-1);
     }
 
-    public static void compress(String str) {
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < str.length(); i++) {
-            int count = 1;
-            while (i < str.length() - 1 && str.charAt(i) == str.charAt(i + 1)) {
-                count++;
-                i++;
-            }
-            sb.append(str.charAt(i));
-            if (count > 1) {
-                sb.append(count);
-            }
+    public static int fibonachi (int n ) {
+        if (n == 0 || n == 1) {
+            return n;
         }
-        System.out.println(sb);
+        return fibonachi(n-1) + fibonachi(n-2);
+    }
+
+    public static boolean isSort (int arr[], int i) {
+        if (i == arr.length-1) {
+            return true;
+        }
+        if (arr[i] > arr[i+1]) {
+            return false;
+        }
+        return isSort(arr, i+1);
+    }
+
+    public static int find(int arr[], int key, int i) {
+        if (i == arr.length) {
+            return -1;
+        }
+        if (arr[i] == key) {
+            return i;
+        }
+        return find(arr, key, i+1);
+    }
+
+    public static int findla(int arr[], int key, int i) {
+        if (i < 0) {
+            return -1;
+        }
+        if (arr[i] == key) {
+            return i;
+        }
+        return find(arr, key, i-1);
+    }
+
+    public static int pow(int n, int p) {
+        if (p == 0) {
+            return 1;
+        }
+        return n * pow(n, p-1);
     }
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-        String str = "aaabbbchdf";
-        compress(str);
-
+        int arr[] = {3,4,7,6,8,4,4,3,6,7,5,};
+        int key = 7;
+        int i = arr.length-1;
+        int p = 10;
+        int n = 2;
+        System.out.println(pow(n, p));
     }
 }
+
