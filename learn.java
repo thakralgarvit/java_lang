@@ -1,94 +1,60 @@
 import java.util.*;
 
 public class learn {
-
-    public static int tile(int k) {
-        if (k == 0 || k == 1) {
-            return 1;
-        }
-        // n-1 for vertical tiles and n-2 for horizontal tiles
-        return tile(k-1) + tile(k-2);
-    }
-
-    public static void redup(String str, StringBuilder nstr, int ind, boolean map[]) {
-        if (ind == str.length()) {
-            System.out.println(nstr);
+    
+    public static void mergeSort(int arr[], int si, int ei) {
+        if (si >= ei) { // base case
             return;
         }
-        char curr = str.charAt(ind);
-        if (map[curr -'a'] == true) {
-            redup(str, nstr, ind+1, map);
-        } else {
-            map[curr-'a'] = true;
-            redup(str, nstr.append(str.charAt(ind)), ind+1, map);
-        }
+        // divide 
+        int mid = si + (ei - si) / 2;
+        mergeSort(arr, si, mid); // left
+        mergeSort(arr, mid+1, ei);// right
+        // concer
+        merge(arr, si, mid, ei);
     }
 
-    public static int friendPair(int n) {
-        if (n == 1 || n == 2) {
-            return n;
+    public static void merge(int arr[], int si, int mid, int ei) {
+        int temp[] = new int[ei - si +1];
+        int i = si; // index for left arr
+        int j = mid +1; // index for right arr
+        int k = 0; // index for temp[]
+        while (i <= mid && j <= ei) {
+            if (arr[i] < arr[j]) {
+                temp[k] = arr[i];
+                k++; i++;
+            }else {
+                temp[k] = arr[j];
+                j++; k++;
+            }
         }
-        return friendPair(n-1) + (n-1) * friendPair(n-2);
+
+        // for the cases when any arr keys are left
+        while (i <= mid) {
+            temp[k++] = arr[i++];
+        }
+        while (j <= ei) {
+            temp[k++] = arr[j++];
+        }
+
+        i = 0;
+        // copying the temp[] to original []
+        for(k = 0; k< temp.length; k++) {
+            arr[si +k] = temp[k];
+        }
+        
     }
 
-    public static void biStr(int n, String str, int lastp) {
-        if (n == 0) {
-            System.out.println(str);
-            return;
-        }
-        biStr(n-1, str+"0", 0);
-        if (lastp == 0) {
-            biStr(n-1, str+"1", 1);
+    public static void print (int arr[]) {
+        for(int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i]);
         }
     }
- 
-    public static void occr( int arr[] , int index, int key) {
-        if (arr[index] == key) {
-            System.out.print(index + " ");
-        }
-        if (index == arr.length-1) {
-            return;
-        }
-        occr(arr, index+1, key);
-    }
-
-    static String dig[]={"zero","one","two","three","four","five","six","seven","eight","nine"};
-
-    public static void printdid (int n) {
-        if (n == 0) {
-            return;
-        }
-        int lastdig = n % 10;
-        printdid(n/10);
-        System.out.print(dig[lastdig]+ " ");
-    }
-
-    static int count = 0;
-    public static void towerof(int n, String start, String helper, String destination) {
-        if (n == 1) {
-            System.out.println("disk " + n +"  will transfer from " + start + " to " + destination);
-            count++;
-            return;
-        }
-        towerof(n-1, start, destination, helper);
-        System.out.println("disk " + n +" will transfer from " + start + " to " + destination);
-        towerof(n-1, helper, start, destination);
-        count++;
-    }   
     
     public static void main(String[] args) {
-        redup("guuguufaa", new StringBuilder(""), 0, new boolean[26]);
-        // out put should be gufa
-        System.out.println(friendPair(3));
-        biStr(3, "", 0);
-        int arr[] = {3,2,4,5,6,2,7,2,2};
-        occr(arr, 0, 2);
-        System.out.println();
-        printdid(1578);
-        System.out.println();
-        towerof(3, "a", "b", "c");
-        System.out.println(count);
-
+        int arr[] = {6,3,9,5,2,8,-5};
+        mergeSort(arr, 0, arr.length-1);
+        print(arr);
     }
 }
 
