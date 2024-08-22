@@ -4,55 +4,43 @@ import javax.print.DocFlavor.STRING;
 
 public class learn {
 
-    public static int maxWater(ArrayList<Integer> hight) {
-        int maxWater = 0;
+    public static boolean find(ArrayList<Integer> list, int tar) {
+        int n = list.size();
+        int bp = -1; //invalid index
 
-        // its a brute force with TC of O(n^2)
-        for (int i = 0; i < hight.size(); i++) {
-            for (int j = i + 1; j < hight.size(); j++) {
-                int currhight = Math.min(hight.get(i), hight.get(j));
-                int width = j - i;
-                int area = currhight * width;
-                maxWater = Math.max(maxWater, area);
+        for(int i = 0; i < n ; i++) { // cheching the breakig point
+            if (list.get(i) > list.get(i+1)) {
+                bp = i;
+                break;
             }
         }
-        return maxWater;
-    }
 
-    public static int storeWater(ArrayList<Integer> height) {
-        int maxWater = 0;
-        int lp = 0;
-        int rp = height.size() - 1;
+        int Lp = bp+1;
+        int Rp = bp;
 
-        // 2 pointer apporch with TC of O(n)
-        while (lp < rp) {
-            int ht = Math.min(height.get(rp), height.get(lp));
-            int width = rp - lp;
-            int area = ht * width;
-            maxWater = Math.max(maxWater, area);
-
-            if (height.get(lp) < height.get(rp)) {
-                lp++;
-            } else {
-                rp--;
+        while (Lp != Rp) {
+            if (list.get(Lp) + list.get(Rp) == tar) { //1st case
+                return true;
             }
+            if (list.get(Lp) + list.get(Rp) < tar) { // 2nd case
+                Lp = (Lp + 1) % n;
+            } else { // 3rd case
+                Rp = (n + Rp -1) % n;
+            } 
         }
-        return maxWater;
+        return false;
     }
 
     public static void main(String[] args) {
-        ArrayList<Integer> hight = new ArrayList<>();
-        hight.add(1);
-        hight.add(8);
-        hight.add(6);
-        hight.add(2);
-        hight.add(5);
-        hight.add(4);
-        hight.add(8);
-        hight.add(3);
-        hight.add(7);
-
-        System.out.println(maxWater(hight));
-        System.out.println(storeWater(hight));
+        ArrayList<Integer> list = new ArrayList<>();
+        list.add(11);
+        list.add(15);
+        list.add(6);
+        list.add(8);
+        list.add(9);
+        list.add(10);
+        
+        int target = 16;
+        System.out.println(find(list, target));
     }
 }
