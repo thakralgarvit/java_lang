@@ -56,79 +56,43 @@ public class learn {
         tail = newNode;
     }
 
-    public static void addMid(int idx, int data) {
+    public static int search(int target) {
 
-        if (idx == 0) {
-            addFirst(data);
-            return;
-        }
-
-        // step 1: is to creat a new node
-        Node newNode = new Node(data);
-        size++;
-
-        // creat variables to trivers
         Node temp = head;
         int i = 0;
 
-        while (i < idx - 1) { // while loop to find the idx
-            temp = temp.next;
-            i++;
+        while (temp != null) {
+            if (temp.data == target) {
+                System.out.println("target has been found");
+                return i;
+            } else {
+                temp = temp.next;
+                i++;
+            }
         }
 
-        // step 2: make new node next to the temp next
-        newNode.next = temp.next;
-
-        // step 3: make temp next to the new node
-        temp.next = newNode;
-
+        return -1;
     }
 
-    public int removeFirst() {
+    public static int helper(Node head, int key) {
 
-        if (size == 0) { // corner case
-            System.out.println("ll is empty");
-            return Integer.MIN_VALUE;
-        } 
-
-        // when both head an tail is supposed to change
-        else if (size == 1) { 
-            int val = head.data;
-            head = tail = null;
-            size = 0;
-            return val;
+        if (head == null) {
+            return -1;
+        }
+        if (head.data == key) {
+            return 0;
         }
 
-        int vl = head.data;
-        head = head.next; // main code to remove
-        size--;
-        return vl;
+        int idx = helper(head.next, key);
+        if (idx == -1) {
+            return -1;
+        }
+
+        return idx + 1;
     }
 
-    public int removelast() {
-        
-        if (size == 0) { //corner cases
-            System.out.println("ll is empty");
-            return Integer.MIN_VALUE;
-        }
-
-        else if (size == 1) { // both are pointing towards the same Node
-            int val = head.data;
-            head = tail =null;
-            size = 0;
-            return val;
-        }
-
-        Node prev = head; // to trivers till the size - 2
-        for (int i = 0; i < size-2; i++) {
-            prev = prev.next;
-        }
-
-        int vl = tail.data; // prev.next.data;
-        prev.next = null;
-        tail = prev;
-        size--;
-        return vl;
+    public static int reSearch(int key) {
+        return helper(head, key);
     }
 
     public static void print() {
@@ -149,24 +113,28 @@ public class learn {
 
     public static void main(String[] args) {
 
-        learn ll = new learn(); //declaration of list
+        learn ll = new learn(); // declaration of list
 
-        ll.addFirst(2); //add
-        ll.addFirst(1); 
-        ll.addLast(3); 
-        ll.addLast(4); 
+        ll.addFirst(2); // add
+        ll.addFirst(1);
+        ll.addLast(3);
+        ll.addLast(4);
 
         ll.addMid(2, 0); // add mid
-        ll.addMid(4, 0); 
+        ll.addMid(4, 0);
 
         ll.print(); // print
-        
+
         System.out.println(ll.size); // get size
 
-        System.out.println(ll.removeFirst()); //remove
+        System.out.println(ll.removeFirst()); // remove
         ll.print();
         System.out.println(ll.removelast());
         ll.print();
+
+        System.out.println(ll.search(1)); // search (linear)
+
+        System.out.println(ll.reSearch(3)); // recurtion search
 
     }
 }
