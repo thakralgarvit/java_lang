@@ -30,69 +30,63 @@ public class learn {
             return;
         }
 
-        // step 2: to make newNode next its head
-        newNode.next = head; // link
+        newNode.next = head;
 
-        // step 3: to update our head to newNode
         head = newNode;
     }
 
     public static void addLast(int data) {
 
-        // step 1: is to creat a new node
         Node newNode = new Node(data);
         size++;
 
-        // check if the link is empty
         if (head == null) {
             head = tail = newNode;
             return;
         }
 
-        // step 2: to make tail's next the newNode
-        tail.next = newNode; // link
+        tail.next = newNode;
 
-        // step 3: to update our tail to newNode
         tail = newNode;
     }
 
-    public static int search(int target) {
+    public static void reverse() {
+        Node prev = null;
+        Node crr = tail = head;
+        Node next;
 
+        while (crr != null) {
+            next = crr.next;
+            crr.next = prev;
+            prev = crr;
+            crr = next;
+        }
+        head = prev;
+    }
+
+    public static void removeNthFromLast(int n) {
+        int sz = 0;
         Node temp = head;
-        int i = 0;
-
-        while (temp != null) {
-            if (temp.data == target) {
-                System.out.println("target has been found");
-                return i;
-            } else {
-                temp = temp.next;
-                i++;
-            }
+        while (temp != null) { // to get the size of linked list
+            temp = temp.next;
+            sz++;
         }
 
-        return -1;
-    }
-
-    public static int helper(Node head, int key) {
-
-        if (head == null) {
-            return -1;
-        }
-        if (head.data == key) {
-            return 0;
+        if (n == sz) {
+            head = head.next; // corner case if our num is equal to size
+            return;
         }
 
-        int idx = helper(head.next, key);
-        if (idx == -1) {
-            return -1;
+        int i = 1;
+        int itoFind = sz - n; // to go till one position back
+        Node prev = head;
+        while (i < itoFind) {
+            prev = prev.next;
+            i++;
         }
 
-        return idx + 1;
-    }
-
-    public static int reSearch(int key) {
-        return helper(head, key);
+        prev.next = prev.next.next;
+        return;
     }
 
     public static void print() {
@@ -113,28 +107,16 @@ public class learn {
 
     public static void main(String[] args) {
 
-        learn ll = new learn(); // declaration of list
-
-        ll.addFirst(2); // add
+        learn ll = new learn();
+        ll.addFirst(5);
+        ll.addFirst(4);
+        ll.addFirst(3);
+        ll.addFirst(2);
         ll.addFirst(1);
-        ll.addLast(3);
-        ll.addLast(4);
-
-        ll.addMid(2, 0); // add mid
-        ll.addMid(4, 0);
-
-        ll.print(); // print
-
-        System.out.println(ll.size); // get size
-
-        System.out.println(ll.removeFirst()); // remove
+        ll.addFirst(0);
         ll.print();
-        System.out.println(ll.removelast());
+        ll.removeNthFromLast(3);
         ll.print();
-
-        System.out.println(ll.search(1)); // search (linear)
-
-        System.out.println(ll.reSearch(3)); // recurtion search
 
     }
 }
