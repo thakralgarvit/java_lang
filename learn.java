@@ -50,43 +50,49 @@ public class learn {
         tail = newNode;
     }
 
-    public static void reverse() {
-        Node prev = null;
-        Node crr = tail = head;
-        Node next;
+    public Node findMid(Node head) {
+        Node fast = head;
+        Node slow = head;
 
-        while (crr != null) {
-            next = crr.next;
-            crr.next = prev;
-            prev = crr;
-            crr = next;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next; // +2
+            slow = slow.next;// +1
         }
-        head = prev;
+
+        return slow; // slow is our mid point
+
     }
 
-    public static void removeNthFromLast(int n) {
-        int sz = 0;
-        Node temp = head;
-        while (temp != null) { // to get the size of linked list
-            temp = temp.next;
-            sz++;
+    public boolean findPalindrome() {
+        if (head == null || head.next == null) {
+            return true;
         }
 
-        if (n == sz) {
-            head = head.next; // corner case if our num is equal to size
-            return;
+        // step 1 to find mid
+        Node mid = findMid(head);
+        // step 2 to reverse the second half
+        Node prev = null;
+        Node curr = mid;
+        Node next;
+
+        while (curr != null) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
         }
 
-        int i = 1;
-        int itoFind = sz - n; // to go till one position back
-        Node prev = head;
-        while (i < itoFind) {
-            prev = prev.next;
-            i++;
+        Node left = head;
+        Node right = prev; // mid point
+        // step 3 to check
+        while (right != null) {
+            if (left.data != right.data) {
+                return false;
+            }
+            right = right.next;
+            left = left.next;
         }
-
-        prev.next = prev.next.next;
-        return;
+        return true;
     }
 
     public static void print() {
@@ -108,15 +114,14 @@ public class learn {
     public static void main(String[] args) {
 
         learn ll = new learn();
-        ll.addFirst(5);
-        ll.addFirst(4);
-        ll.addFirst(3);
+        ll.addFirst(1);
+        ll.addFirst(1);
+        ll.addFirst(2);
         ll.addFirst(2);
         ll.addFirst(1);
-        ll.addFirst(0);
+        ll.addFirst(1);
         ll.print();
-        ll.removeNthFromLast(3);
-        ll.print();
+        System.out.println(ll.findPalindrome());
 
     }
 }
