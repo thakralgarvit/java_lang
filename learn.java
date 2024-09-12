@@ -50,49 +50,47 @@ public class learn {
         tail = newNode;
     }
 
-    public Node findMid(Node head) {
-        Node fast = head;
+    public boolean checkcycle() {
         Node slow = head;
+        Node fast = head;
 
         while (fast != null && fast.next != null) {
-            fast = fast.next.next; // +2
-            slow = slow.next;// +1
+            fast = fast.next.next;
+            slow = slow.next;
+            if (slow == fast) {
+                return true;
+            }
+
         }
-
-        return slow; // slow is our mid point
-
+        return false;
     }
 
-    public boolean findPalindrome() {
-        if (head == null || head.next == null) {
-            return true;
-        }
-
-        // step 1 to find mid
-        Node mid = findMid(head);
-        // step 2 to reverse the second half
+    public static void removecycle(learn ll) {
         Node prev = null;
-        Node curr = mid;
-        Node next;
+        Node slow = head;
+        Node fast = head;
+        boolean cycle = false;
 
-        while (curr != null) {
-            next = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = next;
-        }
-
-        Node left = head;
-        Node right = prev; // mid point
-        // step 3 to check
-        while (right != null) {
-            if (left.data != right.data) {
-                return false;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (slow == fast) {
+                cycle = true;
+                break;
             }
-            right = right.next;
-            left = left.next;
         }
-        return true;
+
+        if (!cycle) {
+            return;
+        }
+
+        slow = head;
+        while (slow != fast) {
+            slow = slow.next;
+            prev = fast;
+            fast = fast.next;
+        }
+        prev.next = null;
     }
 
     public static void print() {
@@ -121,7 +119,13 @@ public class learn {
         ll.addFirst(1);
         ll.addFirst(1);
         ll.print();
-        System.out.println(ll.findPalindrome());
+        System.out.println(ll.checkcycle());
+        head.next.next.next.next.next = head.next.next;
+        System.out.println(ll.checkcycle());
+        removecycle(ll);
+        ll.print();
+        System.out.println(ll.checkcycle());
+        
 
     }
 }
