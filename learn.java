@@ -125,6 +125,7 @@ public class learn {
         removecycle(ll);
         ll.print();
         System.out.println(ll.checkcycle());
+
         
 
     }
