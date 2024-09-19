@@ -5,8 +5,8 @@ import javax.print.DocFlavor.STRING;
 public class learn {
 
     public static class Node {
-        int data; // can be of anytype
-        Node next; // refer to chain
+        int data;
+        Node next;
 
         public Node(int data) {
             this.data = data;
@@ -14,119 +14,92 @@ public class learn {
         }
     }
 
-    public static Node head; // static so that it can be used anywhere
+    public static Node head;
     public static Node tail;
-    public static int size;
 
-    public static void addFirst(int data) {
-
-        // step 1: is to creat a new node
-        Node newNode = new Node(data);
-        size++;
-
-        // check if the link is empty
-        if (head == null) {
-            head = tail = newNode;
-            return;
-        }
-
-        newNode.next = head;
-
-        head = newNode;
-    }
-
-    public static void addLast(int data) {
-
-        Node newNode = new Node(data);
-        size++;
-
-        if (head == null) {
-            head = tail = newNode;
-            return;
-        }
-
-        tail.next = newNode;
-
-        tail = newNode;
-    }
-
-    public boolean checkcycle() {
+    private static Node getMid(Node head) {
         Node slow = head;
-        Node fast = head;
+        Node fast = head.next; // this way we can we will get mid in the first half
 
         while (fast != null && fast.next != null) {
-            fast = fast.next.next;
             slow = slow.next;
-            if (slow == fast) {
-                return true;
-            }
-
+            fast = fast.next.next;
         }
-        return false;
+
+        return slow;
     }
 
-    public static void removecycle(learn ll) {
-        Node prev = null;
-        Node slow = head;
-        Node fast = head;
-        boolean cycle = false;
+    private static Node merge(Node head1, Node head2) {
+        Node mergell = new Node(-1);
+        Node temp = mergell;
 
-        while (fast != null && fast.next != null) {
-            fast = fast.next.next;
-            slow = slow.next;
-            if (slow == fast) {
-                cycle = true;
-                break;
+        while (head1 != null && head2 != null) {
+            if (head1.data <= head2.data) {
+                temp.next = head1;
+                head1 = head1.next;
+                temp = temp.next;
+            } else {
+                temp.next = head2;
+                head2 = head2.next;
+                temp = temp.next;
             }
         }
-
-        if (!cycle) {
-            return;
-        }
-
-        slow = head;
-        while (slow != fast) {
-            slow = slow.next;
-            prev = fast;
-            fast = fast.next;
-        }
-        prev.next = null;
-    }
-
-    public static void print() {
-        if (head == null) { // corner case
-            System.out.println("ll is empty");
-            return;
-        }
-        // variable to triverse
-        Node temp = head;
-
-        // loop to run till the null node
-        while (temp != null) {
-            System.out.print(temp.data + "->");
+            
+        while (head1 != null) {
+            temp.next = head1;
+            head1 = head1.next;
             temp = temp.next;
         }
-        System.out.println("null");
+
+        while (head2 != null) {
+            temp.next = head2;
+            head2 = head2.next;
+            temp = temp.next;
+        }
+
+        return mergell.next;
+    }
+
+    public static Node mergeSort(Node head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        Node mid = getMid(head);
+
+        Node righthead = mid.next;
+        mid.next = null;
+
+        Node newleft = mergeSort(head);
+        Node newright = mergeSort(righthead);
+
+        return merge(newleft, newright);
+    }
+
+    public static void printList(Node head) {
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.data + " ");
+            temp = temp.next;
+        }
+        System.out.println();
     }
 
     public static void main(String[] args) {
+        int[] values = { 5, 7, 3, 9, 4, 8, 2 };
+        Node head = new Node(values[0]);
+        Node current = head;
+        for (int i = 1; i < values.length; i++) {
+            current.next = new Node(values[i]);
+            current = current.next;
+        }
 
-        learn ll = new learn();
-        ll.addFirst(1);
-        ll.addFirst(1);
-        ll.addFirst(2);
-        ll.addFirst(2);
-        ll.addFirst(1);
-        ll.addFirst(1);
-        ll.print();
-        System.out.println(ll.checkcycle());
-        head.next.next.next.next.next = head.next.next;
-        System.out.println(ll.checkcycle());
-        removecycle(ll);
-        ll.print();
-        System.out.println(ll.checkcycle());
+        System.out.println("Original list:");
+        printList(head);
 
-        
+        head = mergeSort(head);
 
+        System.out.println("Sorted list:");
+        printList(head);
     }
 }
